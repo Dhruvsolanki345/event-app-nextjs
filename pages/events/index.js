@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { useRef } from "react";
+import axios from "axios";
 import EventList from "../../components/events/EventList";
-import { getAllEvents } from "../../dummy-data";
 
-export default function EventsPage() {
-  const events = getAllEvents();
+export default function EventsPage(props) {
+  const { events } = props;
 
   const yearRef = useRef();
   const monthRef = useRef();
@@ -21,7 +21,7 @@ export default function EventsPage() {
   };
 
   return (
-    <div className="py-10 min-h-screen">
+    <div className="py-10">
       <form
         onSubmit={submitHandler}
         className="flex mx-auto gap-4 items-center bg-white w-max p-3 rounded-md mb-10"
@@ -62,4 +62,31 @@ export default function EventsPage() {
       <EventList items={events} />
     </div>
   );
+}
+
+export async function getStaticProps(context) {
+  const res = await axios.get(
+    "https://events-a5794-default-rtdb.asia-southeast1.firebasedatabase.app/events.json"
+  );
+  const data = res.data;
+
+  if (!data) return { notFound: true };
+
+  let events = [];
+
+  for (const key in data) {
+    const event = data[key];
+    events.push({
+      id: key,
+      ...event,
+    });
+  }
+
+  return {
+    props: {
+      events,
+    },
+    revalidate: 100,
+    // revalidate: 3600,
+  };
 }
