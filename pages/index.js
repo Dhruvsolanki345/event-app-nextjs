@@ -1,3 +1,4 @@
+import Head from "next/head";
 import axios from "axios";
 import EventList from "../components/events/EventList";
 
@@ -6,6 +7,10 @@ export default function HomePage(props) {
 
   return (
     <div className="py-10">
+      <Head>
+          <title>Featured Events</title>
+          <meta name="description" content="Find a lot of great events that will allow you to evolve" />
+        </Head>
       {featuredEvents.length !== 0 ? (
         <EventList items={featuredEvents} />
       ) : (

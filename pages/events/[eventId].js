@@ -1,3 +1,5 @@
+import Head from "next/head";
+import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { AiOutlineCalendar } from "react-icons/ai";
@@ -22,16 +24,23 @@ export default function EventDetaiPage(props) {
 
   return (
     <div className="text-center">
+      <Head>
+        <title>{event.title}</title>
+        <meta name="description" content={event.description} />
+      </Head>
       <p className="bg-gradient-to-tr from-cyan-700 to-teal-500 text-green-100 text-5xl font-bold pt-14 pb-28 -mb-14">
         {event.title}
       </p>
-      <div className="flex bg-neutral-800 w-[500px] mx-auto rounded-lg text-green-100">
-        <img
-          src={`/${event.image}`}
-          alt={event.title}
-          className="rounded-full h-64 w-64 object-cover border-4 m-6"
-        />
-        <div className="flex-col self-center">
+      <div className="flex justify-center bg-neutral-800 w-[600px] mx-auto rounded-lg text-green-100 shadow-lg shadow-green-900/50">
+        <div className="rounded-full h-72 w-72 border-4 my-6 overflow-hidden relative">
+          <Image
+            src={`/${event.image}`}
+            alt={event.title}
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
+        <div className="flex-col self-center ml-6">
           <AiOutlineCalendar size={20} />
           <p className="font-semibold text-sm mt-1 mb-8 text-left">
             {new Date(event.date).toLocaleDateString("en-GB", {

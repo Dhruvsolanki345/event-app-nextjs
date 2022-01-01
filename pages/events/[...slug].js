@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 import axios from "axios";
 import EventList from "../../components/events/EventList";
@@ -21,7 +22,11 @@ export default function EventFilterPage(props) {
   });
 
   return (
-    <div className="py-10 min-h-screen">
+    <div className="py-10">
+      <Head>
+          <title>Filtered Events</title>
+          <meta name="description" content={`All events for ${month}/${year}`} />
+        </Head>
       <div className="mx-auto mb-10 w-max">
         <p className="font-bold text-lg">Events in {date}</p>
         <Link href="/events">

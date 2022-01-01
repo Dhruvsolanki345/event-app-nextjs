@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useRef } from "react";
 import axios from "axios";
@@ -21,7 +22,10 @@ export default function EventsPage(props) {
   };
 
   return (
-    <div className="py-10">
+    <div className="py-10"><Head>
+    <title>All Events</title>
+    <meta name="description" content="Find a lot of great events that will allow you to evolve" />
+  </Head>
       <form
         onSubmit={submitHandler}
         className="flex mx-auto gap-4 items-center bg-white w-max p-3 rounded-md mb-10"
